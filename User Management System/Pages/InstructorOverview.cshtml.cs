@@ -46,7 +46,7 @@ namespace Lightaplusplus.Pages
             }
             var sections = _context.Sections.Where(i => i.InstructorId == Users.ID);
 
-            Sections[] sectionsTaught = new Sections[sections.Count()];
+            sectionsTaught = new Sections[sections.Count()];
             int iter = 0;
             foreach (var section in sections)
             {

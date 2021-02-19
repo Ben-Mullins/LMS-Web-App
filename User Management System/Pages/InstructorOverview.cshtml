@@ -4,28 +4,26 @@
     ViewData["Title"] = "Instructor Overview";
 }
 
+<div class="edit-link" style="float:right">
+    <a class="btn btn-primary" asp-page="/CreateSection" asp-route-id="@Model.Users.ID"></i>Create New Section</a>
+</div>
 
 <div class="row">
-    @for (var i = 0; i < 6; i++)
+    @if (Model.sectionsTaught.Length > 0)
     {
-        <div class="col-4" style="padding-bottom:5%">
-        <component type="typeof(Components.InstructorClassComponent)" render-mode="Static" param-ClassNumber='"CS 0000"'
-                param-ClassName='"Class Name"'
-                param-StartTime='Convert.ToDateTime("10:00")' param-EndTime='Convert.ToDateTime("12:00")'
-                param-Link='"/Welcome?id=7"' /> 
+        foreach (var card in Model.sectionsTaught)
+        {
+            <div class="col-4" style="padding-bottom:5%">
+                <component type="typeof(Components.InstructorClassComponent)" render-mode="Static" param-ClassNumber='card.Course.CourseNumber'
+                           param-ClassName='card.Course.CourseName'
+                           param-StartTime='Convert.ToDateTime(card.SectionTimeStart)' param-EndTime='Convert.ToDateTime(card.SectionTimeEnd)'
+                           param-DaysTaught='card.DaysTaught' param-ClassCode='card.Course.CourseCode'
+                           param-Link='"/Welcome?id=7"' />
             </div>
         }
-</div>
-<div class="row">
-    @foreach (var card in Model.sectionsTaught)
-    {
-        <div class="col-4" style="padding-bottom:5%">
-            <component type="typeof(Components.InstructorClassComponent)" render-mode="Static" param-ClassNumber='card.Course.CourseNumber'
-                       param-ClassName='card.Course.CourseName'
-                       param-StartTime='Convert.ToDateTime(card.SectionTimeStart)' param-EndTime='Convert.ToDateTime(card.SectionTimeEnd)'
-                       param-DaysTaught='card.DaysTaught'
-                       param-Link='"/Welcome?id=7"' />
-        </div>
     }
+    else
+    {
+        <h3>No sections currently being taught.</h3>
     }
 </div>
